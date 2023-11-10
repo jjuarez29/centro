@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datos Generales</title>
+</head>
+<body>
+    <h1>Datos Estudios</h1>
+    <table>
+        <tr>
+            <th>DNI</th>
+            <td>{{ data.dni }}</td>
+        </tr>
+        <tr>
+            <th>Estudio</th>
+            <td>{{ data.estudio }}</td>
+        </tr>
+        <tr>
+            <th>Entidad</th>
+            <td>{{ data.entidad }}</td>
+        </tr>
+        <tr>
+            <th>Fecha de Termino</th>
+            <td>{{ data.fecha_termino }}</td>
+        </tr>
+    </table>
+    <br>
+    <a href="{{ url_for('edit_datos_estudios', dni=data.dni) }}">Editar</a>
+    <form action="{{ url_for('delete_datos_estudios', dni=data.dni) }}" method="post">
+        <button type="submit">Eliminar</button>
+    </form>
+</body>
+</html>

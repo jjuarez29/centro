@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Editar Datos Estudios</title>
+</head>
+<body>
+    <h1>Editar Datos Estudios</h1>
+
+    <form action="{{ url_for('update_datos_estudios', dni=data['dni'] ) }}" method="post">
+        <label for="dni">DNI:</label>
+        <input type="number" id="dni" name="dni" value="{{ data.dni }}" required><br><br>
+        <label for="estudio">Estudios:</label>
+        <input type="text" id="estudio" name="estudio" value="{{ data.estudio }}" required><br><br>
+        <label for="entidad">Entidad:</label>
+        <input type="text" id="entidad" name="entidad" value="{{ data.entidad }}" required><br><br>
+        <label for="fecha_termino">Fecha de Termino:</label>
+        <input type="date" id="fecha_termino" name="fecha_termino" value="{{ data.fecha_termino }}" required><br><br>
+        <input type="submit" value="Actualizar">
+    </form>
+
+    <a href="{{ url_for('list_datos_estudios') }}">Regresar a Lista Datos estudios</a>
+</body>
+</html>

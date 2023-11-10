@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Listado de Datos Generales</title>
+</head>
+<body>
+    <h1>Listado de Datos Generales</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>DNI</th>
+                <th>Apellidos</th>
+                <th>Nombres</th>
+                <th>Fecha de Nacimiento</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in data %}
+            <tr>
+                <td>{{ item['dni'] }}</td>
+                <td>{{ item['apellidos'] }}</td>
+                <td>{{ item['nombres'] }}</td>
+                <td>{{ item['fecha_nacimiento'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ url_for('get_datos_generales') }}">Regresar a Datos Generales</a>
+</body>
+</html>

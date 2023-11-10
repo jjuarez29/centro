@@ -1,0 +1,46 @@
+#version a probar
+version: '3.8'
+
+services:
+  db:
+    image: mongo:4.4.4
+    volumes:
+      - db_data:/data/db
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+  # ... tus otros servicios    
+  main:
+    build: .
+    ports:
+      - "5000:5000"
+  main_container:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./main_container/nginx.conf:/etc/nginx/nginx.conf
+  datos_generales:
+    build:
+      context: ./microfrontends/datos_generales
+      dockerfile: Dockerfile_datos_generales
+    ports:
+      - "5001:5001"  # Puerto del microfrontend datos_generales
+    depends_on:
+      - db
+  datos_estudios:
+    build:
+      context: ./microfrontends/datos_estudios
+      # dockerfile: Dockerfile por defecto 
+    ports:
+      - "5002:5002"  # Puerto del microfrontend datos_generales
+    depends_on:
+      - db
+
+# Aquí estamos definiendo el volumen db_data
+volumes:
+  db_data:
+  redis_data: 

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Datos Generales</title>
+</head>
+<body>
+    <h1>Datos Generales</h1>
+    {% if data %}
+    <p>DNI: {{ data.dni }}</p>
+    <p>Apellidos: {{ data.apellidos }}</p>
+    <p>Nombres: {{ data.nombres }}</p>
+    <p>Fecha de Nacimiento: {{ data.fecha_nacimiento }}</p>
+    <a href="{{ url_for('edit_datos_generales', dni=data.dni) }}">Editar</a>
+    <a href="{{ url_for('list_datos_crud') }}">Listar</a>
+    <form action="{{ url_for('delete_datos_generales', dni=data.dni) }}" method="post">
+        <button type="submit">Eliminar</button>
+    </form>
+
+    {% else %}
+    <p>No hay datos disponibles.</p>
+    <form action="{{ url_for('add_datos_generales') }}" method="post" style="display:inline;">
+        <input type="submit" value="Añadir" onclick="return confirm('¿Estás seguro de que deseas eliminar este registro?');">
+    </form>
+
+    {% endif %}
+</body>
+</html>

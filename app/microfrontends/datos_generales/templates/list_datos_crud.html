@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Listado de Datos Generales Edicion</title>
+</head>
+<body>
+    <h1>Listado de Datos Generales Cr</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>DNI</th>
+                <th>Apellidos</th>
+                <th>Nombres</th>
+                <th>Fecha de Nacimiento</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in data %}
+                <tr>
+                    <td>{{ item['dni'] }}</td>
+                    <td>{{ item['apellidos'] }}</td>
+                    <td>{{ item['nombres'] }}</td>
+                    <td>{{ item['fecha_nacimiento'] }}</td>
+                    <td>
+                        <a href="{{ url_for('edit_datos_generales', dni=item['dni']) }}">Editar</a>
+                        <form action="{{ url_for('delete_datos_generales', dni=item['dni']) }}" method="post" style="display:inline;">
+                            <input type="submit" value="Eliminar" onclick="return confirm('¿Estás seguro de que deseas eliminar este registro?');">
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ url_for('add_datos_generales') }}">Agregar Nuevo Registro</a>
+    <br>
+    <h>regresar </h>
+
+
+    <!-- Enlace directo a la URL 
+    <a href="http://localhost:5000/">Menu inicial</a>  -->
+    <a href="http://localhost:5000/">Menu inicial</a>  
+
+    <!-- Enlace directo usando una ruta relativa -->
+    <a href="/">Menu inicial no funciona / </a> 
+       
+    <!-- Usando url_for para generar la URL para la función 'inicio'  -->
+   
+    <!-- Redirección Directa en la Función de Vista :Para hacer algo antes de salir probada:-->
+    <a href="{{ url_for('rindex') }}">Menu inicial rindex </a> 
+                   
+    
+</body >
+</html>

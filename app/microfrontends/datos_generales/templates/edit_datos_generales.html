@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Editar Datos Generales</title>
+</head>
+<body>
+    <h1>Editar Datos Generales</h1>
+
+    <form action="{{ url_for('update_datos_generales', dni=data['dni'] ) }}" method="post">
+        <label for="dni">DNI:</label>
+        <input type="number" id="dni" name="dni" value="{{ data.dni }}" required><br><br>
+        <label for="apellidos">Apellidos:</label>
+        <input type="text" id="apellidos" name="apellidos" value="{{ data.apellidos }}" required><br><br>
+        <label for="nombres">Nombres:</label>
+        <input type="text" id="nombres" name="nombres" value="{{ data.nombres }}" required><br><br>
+        <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+        <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" value="{{ data.fecha_nacimiento }}" required><br><br>
+        <input type="submit" value="Actualizar">
+    </form>
+
+    <a href="{{ url_for('list_datos_crud') }}">Regresar a Datos Generales</a>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ingresar Datos Estudios</title>
+</head>
+<body>
+    <h1>Ingresar Datos Estudio</h1>
+
+        <form action="{{ url_for('add_datos_estudios') }}" method="post">
+            <label for="dni">DNI:</label>
+        <input type="number" id="dni" name="dni" required><br><br>
+        <label for="estudio">Estudios:</label>
+        <input type="text" id="estudio" name="estudio" required><br><br>
+        <label for="entidad">Entidad:</label>
+        <input type="text" id="entidad" name="entidad" required><br><br>
+        <label for="fecha_termino">Fecha de Termino:</label>
+        <input type="date" id="fecha_termino" name="fecha_termino" required><br><br>
+        <input type="submit" value="Guardar">
+    </form>
+
+    <a href="{{ url_for('list_datos_estudios') }}">Regresar a listado Estudios</a>
+    
+</body>
+</html>

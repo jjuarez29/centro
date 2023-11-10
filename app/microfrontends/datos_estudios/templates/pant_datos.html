@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+ 
+<html>
+<head>
+    <title>Datos Estudio</title>
+    <h1>Datos Generales traer </h1>
+    
+    
+</head>
+<body>
+    
+    <h1>Datos Estudios</h1>
+    {% if data %}
+    <p>DNI: {{ data.dni }}</p>
+    <p>Estudio: {{ data.estudio }}</p>
+    <p>entidad: {{ data.entidad }}</p>
+    <p>Fecha de Termino: {{ data.fecha_termino }}</p>
+    <a href="{{ url_for('edit_datos_estudios', dni=data.dni) }}">Editar</a>
+    <a href="{{ url_for('list_datos_estudios', dni=data.dni) }}"> Listar_Estudios </a>
+    
+    <form action="{{ url_for('delete_datos_estudios', dni=data.dni) }}" method="post">
+        <button type="submit">Eliminar</button>
+    </form>
+    {% else %}
+    <p>No hay datos disponibles.</p>
+    
+    {% endif %}
+</body>
+</html>

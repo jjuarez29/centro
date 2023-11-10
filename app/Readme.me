@@ -1,0 +1,180 @@
+
+Proyecto microfrontends
+
+app/
+|-- microfrontends/
+|   |-- datos_generales/
+|   |-- datos_estudios/
+|   |-- datos_trabajos/
+|   |-- datos_hobbies/
+|-- main_container/
+|-- db/
+|-- docker-compose.yml
+
+***
+mddir1.bat
+md app1
+cd app1
+md microfrontends
+cd microfrontends
+md datos_generales
+cd datos_generales
+md static
+md templates
+cd..
+md datos_estudios
+cd datos_estudios
+md static
+md templates
+cd..
+
+md datos_trabajos 
+cd datos_trabajos
+md static
+md templates
+cd..
+
+md datos_hobbies
+cd datos_hobbies
+md static
+md templates
+cd..
+md main_container
+md db
+
+
+
+
+#2 
+# docker-compose.yml
+version: '3'
+services:
+  main_container:
+    build: ./main_container
+    ports:
+      - "5000:5000"
+    links:
+      - mongodb
+
+  mongodb:
+    image: "mongo"
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./db:/data/db
+
+  datos_generales:
+    build: ./microfrontends/datos_generales
+    ports:
+      - "5001:5001"
+
+  datos_estudios:
+    build: ./microfrontends/datos_estudios
+    ports:
+      - "5002:5002"
+
+  # ... lo mismo para otros microfrontends
+
+
+2. Microfrontends:
+Por simplicidad, aquí solo se muestra el Dockerfile para datos_generales.
+
+Dockerfile en microfrontends/datos_generales:
+
+FROM python:3.9-slim
+
+WORKDIR /app
+
+COPY . /app
+
+RUN pip install --no-cache-dir Flask pymongo
+
+EXPOSE 5001
+
+CMD ["python", "app_datos_generales.py"]
+
+
+#Un pequeño servidor Flask en microfrontends/datos_generales/app_datos_generales.py:
+
+#python
+#Copy code
+from flask import Flask, render_template
+from pymongo import MongoClient
+
+app = Flask(__name__)
+client = MongoClient('mongodb://mongodb:27017/')
+db = client.curriculumDB
+
+@app.route('/datos_generales')
+def get_datos_generales():
+    # Obtener datos desde MongoDB
+    # data = db.datos_generales.find_one()
+    return render_template('datos_generales.html')  # , data=data)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5001)
+
+3. Contenedor Principal:
+Este contenedor se encargará de componer todos los microfrontends.
+
+Dockerfile en main_container:
+
+#Dockerfile
+#Copy code
+FROM nginx:alpine
+
+COPY ./nginx.conf /etc/nginx/nginx.conf
+
+#La configuración de Nginx main_container/nginx.conf:
+
+nginx
+Copy code
+events {}
+
+http {
+    server {
+        listen 5000;
+
+        location /datos_generales/ {
+            proxy_pass http://datos_generales:5001;
+        }
+
+        location /datos_estudios/ {
+            proxy_pass http://datos_estudios:5002;
+        }
+
+        # ... configuraciones similares para otros microfrontends
+    }
+}
+
+#Con esta configuración, 
+#Nginx en el contenedor principal actúa como un proxy inverso, 
+#dirigiendo las solicitudes a los respectivos microfrontends.
+
+#Para iniciar toda la aplicación, simplemente ejecutas:
+
+#bash
+#Copy code
+docker-compose up --build
+
+#Es importante mencionar que este es un ejemplo muy simplificado y no aborda todas las preocupaciones que podrías tener en una aplicación en producción, como seguridad, optimización, manejo de errores, etc.
+
+
+
+
+Is this conversation helpful so far?
+
+// docker compose incial
+
+habia un servicos 
+main_container
+directorio donde habia 
+nginx.conf
+donde habia Dockerfile
+FROM nginx:alpine
+
+COPY ./nginx.conf /etc/nginx/nginx.conf
+
+
+
+
